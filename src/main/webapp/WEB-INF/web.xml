@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>Library Service Web Application</display-name>
+
+    <welcome-file-list>
+        <welcome-file>/library/*</welcome-file>
+        <!--<welcome-file>home</welcome-file>-->
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- jstl tags -->
+    <jsp-config>
+        <taglib>
+            <taglib-uri>http://ua.training.library/webapp/views/tlds/viewtags</taglib-uri>
+            <taglib-location>/WEB-INF/views/tlds/viewtags.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
+    <!-- filters -->
+    <filter-mapping>
+        <filter-name>logSessionIdFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>localizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- error-code related error pages -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/library/error</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/library/error</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/library/error</location>
+    </error-page>
+
+    <!-- exception-type related error pages -->
+    <error-page>
+        <exception-type>
+            javax.servlet.ServletException
+        </exception-type>
+        <location>/library/error</location>
+    </error-page>
+</web-app>
