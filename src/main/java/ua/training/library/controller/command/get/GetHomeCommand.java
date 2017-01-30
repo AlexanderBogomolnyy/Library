@@ -7,11 +7,10 @@ import ua.training.library.model.entity.states.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GetProfileCommand implements Command {
+public class GetHomeCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, Role role) {
-        return Pages.PROFILE_PAGE;
+        return Pages.HOME_PAGE;
     }
-
 }

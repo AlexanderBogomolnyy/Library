@@ -11,38 +11,33 @@
 <c:set var="user" scope="page" value="${sessionScope[Attributes.LOGINED_USER]}"/>
 <c:set var="librarian" scope="page" value="${Role.LIBRARIAN}"/>
 <c:set var="client" scope="page" value="${Role.CLIENT}"/>
+<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}${Paths.BASE}"/>
+<c:set var="user_scope_url" scope="page" value="${url_base}${Paths.DELIMITER}${user.role.name().toLowerCase()}"/>
 
 <div id="main_menu">
     <ul>
-        <li><a href="${pageContext.request.contextPath}${Paths.HOME}"> <fmt:message key="menu.home"
-                                                                                    bundle="${message}"/> </a>
-        </li>
+        <li><a href="${url_base}${Paths.HOME}"> <fmt:message key="menu.home" bundle="${message}"/> </a></li>
         <view:access-by-role user="${user}" roles="${librarian}, ${client}">
             <li>
-                <a href="${pageContext.request.contextPath}${Paths.CATALOG}"> <fmt:message key="menu.catalog"
-                                                                                           bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.CATALOG}"> <fmt:message key="menu.catalog" bundle="${message}"/> </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}${Paths.ORDERS}"> <fmt:message key="menu.list_of_orders"
-                                                                                          bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.ORDERS}"> <fmt:message key="menu.list_of_orders" bundle="${message}"/> </a>
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" roles="${librarian}">
             <li>
-                <a href="${pageContext.request.contextPath}${Paths.CLIENTS}"> <fmt:message key="menu.list_of_clients"
-                                                                                           bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.CLIENTS}"> <fmt:message key="menu.list_of_clients" bundle="${message}"/> </a>
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" roles="${librarian}, ${client}">
             <li style="float:right">
-                <a href="${pageContext.request.contextPath}${Paths.LOGOUT}"> <fmt:message key="menu.logout"
-                                                                                          bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.LOGOUT}"> <fmt:message key="menu.logout" bundle="${message}"/> </a>
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" noUser="true">
         <li style="float:right">
-            <a href="${pageContext.request.contextPath}${Paths.LOGIN}"> <fmt:message key="menu.login"
-                                                                                     bundle="${message}"/> </a>
+            <a href="${url_base}${Paths.LOGIN}"> <fmt:message key="menu.login" bundle="${message}"/> </a>
         </li>
         </view:access-by-role>
     </ul>

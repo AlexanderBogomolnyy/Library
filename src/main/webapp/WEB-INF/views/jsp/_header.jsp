@@ -13,13 +13,14 @@
 <c:set var="user" scope="page" value="${sessionScope[Attributes.LOGINED_USER]}"/>
 <c:set var="librarian" scope="page" value="${Role.LIBRARIAN}"/>
 <c:set var="client" scope="page" value="${Role.CLIENT}"/>
-<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}"/>
+<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}${Paths.BASE}"/>
+<c:set var="profile_link" scope="page" value="${url_base}${Paths.DELIMITER}${user.role.name().toLowerCase()}${Paths.PROFILE}"/>
 
 <div id="header">
   <h1 class="title"><fmt:message key="application.title" bundle="${message}"/></h1>
   <div class="user">
-          <view:access-by-role user="${user}" roles="${librarian}">
-              <b><fmt:message key="application.greeting" bundle="${message}" />&nbsp;<a href="${url_base}${sessionScope[Attributes.PROFILE_LINK]}">${user.login}</a></b>
+          <view:access-by-role user="${user}" roles="${librarian},${client}">
+              <b><fmt:message key="application.greeting" bundle="${message}" />&nbsp;<a href="${profile_link}">${user.login}</a></b>
           </view:access-by-role>
           <view:access-by-role user="${user}" noUser="true">
               <a href="${url_base}${Paths.REGISTRATION}"><fmt:message key="application.registration" bundle="${message}" /></a>

@@ -9,7 +9,9 @@ import ua.training.library.dao.factory.DAOFactory;
 import ua.training.library.dao.factory.DAOFactoryImpl;
 import ua.training.library.model.entity.User;
 import org.apache.log4j.Logger;
+import ua.training.library.model.entity.states.Role;
 import ua.training.library.service.UserService;
+import ua.training.library.service.exception.ServiceException;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private static class Holder {
-        private static final UserServiceImpl INSTANCE = new UserServiceImpl(ConnectionFactoryImpl.getInstance(),
+        private static final UserService INSTANCE = new UserServiceImpl(ConnectionFactoryImpl.getInstance(),
                 DAOFactoryImpl.getInstance());
     }
 
-    public static UserServiceImpl getInstance(){
+    public static UserService getInstance(){
         return Holder.INSTANCE;
     }
 
@@ -55,26 +57,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getByLoginAndEmail(String login, String email) {
+    public List<User> getAllAvailable(Role role) {
         try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
             UserDAO userDAO = daoFactory.getUserDAO(connection);
-            return userDAO.getByLoginAndEmail(login, email);
-        }
-    }
-
-    @Override
-    public List<User> getAll() {
-        try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
-            UserDAO userDAO = daoFactory.getUserDAO(connection);
-            return userDAO.getAll();
+            if (role == Role.LIBRARIAN) {
+                return userDAO.getAllByRole(Role.CLIENT);
+            } else {
+                throw new ServiceException(ActionMessages.NO_PERMISSION);
+            }
         }
     }
 
     @Override
     public void create(User user) {
         try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
-            UserDAO userDAO = daoFactory.getUserDAO(connection);
             connection.beginTransaction();
+            UserDAO userDAO = daoFactory.getUserDAO(connection);
             if (userDAO.getByLoginAndPassword(user.getLogin(), user.getEmail()).isPresent())
                 throw new RuntimeException(ActionMessages.ERROR_WITH_CREATING_USER);
             else
@@ -85,11 +83,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException();
     }
 }

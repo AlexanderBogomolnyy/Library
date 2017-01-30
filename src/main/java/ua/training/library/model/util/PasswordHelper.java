@@ -1,17 +1,21 @@
 package ua.training.library.model.util;
 
+import org.apache.log4j.Logger;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
 public class PasswordHelper {
 
+    private static final Logger logger = Logger.getLogger(PasswordHelper.class);
+
     public static final String ALGORITHM = "MD5";
 
     // Password encoding sample for filling DB testing items
     public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchProviderException
     {
-        String passwordToHash = "444";
+        String passwordToHash = "0000";
 
         String securePassword = getSecurePassword(passwordToHash);
         System.out.println(securePassword);
@@ -28,7 +32,7 @@ public class PasswordHelper {
             }
             generatedPassword = builder.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error("Fail in password encoding.");
         }
         return generatedPassword;
     }

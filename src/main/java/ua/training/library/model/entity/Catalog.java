@@ -2,6 +2,16 @@ package ua.training.library.model.entity;
 
 import ua.training.library.model.entity.states.BookStatus;
 
+/**
+ * <p> The Catalog class.
+ * This class contains general information about book,
+ * like title, authors, year of publication, isbn and category.
+ * Also this class provides information about total and available amount of
+ * book items, and catalog element status.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public class Catalog {
 
     private int id;

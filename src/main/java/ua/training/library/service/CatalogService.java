@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface CatalogService {
     Optional<Catalog> getById(int id);
     List<Catalog> getAll();
+    List<Catalog> getAllActive();
     void create(Catalog catalog);
     void update(Catalog catalog);
     void delete(int id);

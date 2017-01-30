@@ -24,17 +24,43 @@
 
     <!-- filters -->
     <filter-mapping>
+        <filter-name>authorizationFilter</filter-name>
+        <url-pattern>/library/client/*</url-pattern>
+        <url-pattern>/library/librarian/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>logSessionIdFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/library/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>localizationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/library/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/library/*</url-pattern>
     </filter-mapping>
+
+    <!-- servlet mapping -->
+    <servlet>
+        <servlet-name>mainController</servlet-name>
+        <servlet-class>ua.training.library.controller.MainController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>mainController</servlet-name>
+        <url-pattern>/library/</url-pattern>
+        <url-pattern>/library/login</url-pattern>
+        <url-pattern>/library/logout</url-pattern>
+        <url-pattern>/library/registration</url-pattern>
+        <url-pattern>/library/en</url-pattern>
+        <url-pattern>/library/ua</url-pattern>
+        <url-pattern>/library/ru</url-pattern>
+        <url-pattern>/library/client/*</url-pattern>
+        <url-pattern>/library/librarian/*</url-pattern>
+        <url-pattern>/library/error</url-pattern>
+        <url-pattern>/library/access_denied</url-pattern>
+    </servlet-mapping>
 
     <!-- error-code related error pages -->
     <error-page>

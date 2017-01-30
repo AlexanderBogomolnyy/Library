@@ -15,14 +15,14 @@ public interface QueryResource {
     String USER_EMAIL = "user.email";
     String USER_PASSWORD = "user.password";
     String USER_STATUS = "user.status";
-
-    String USER_GET_ALL = "SELECT * FROM `library_db`.`user` " +
-            "JOIN `library_db`.`user_role` ON `user`.`role_id` = `user_role`.`id` ";
-    String USER_GET_BY_LOGIN_AND_PASSWORD = USER_GET_ALL + "WHERE `login` = ? AND `password` = ?";
-    String USER_GET_BY_ID = USER_GET_ALL + "WHERE `id` = ?";
-    String USER_GET_BY_LOGIN_OR_EMAIL = USER_GET_ALL + "WHERE `login` = ? OR `email` = ?";
-    String USER_CREATE_USER = "INSERT INTO `user` (`login`, `f_name`, `l_name`, `email`, `password`, `role_id`, `status`) " +
-            "  VALUE(?, ?, ?, ?, ?, ?, ?)";
+//
+//    String USER_GET_ALL = "SELECT * FROM `library_db`.`user` " +
+//            "JOIN `library_db`.`user_role` ON `user`.`role_id` = `user_role`.`id` ";
+//    String USER_GET_BY_LOGIN_AND_PASSWORD = USER_GET_ALL + "WHERE `login` = ? AND `password` = ?";
+//    String USER_GET_BY_ID = USER_GET_ALL + "WHERE `user`.`id` = ?";
+//    String USER_GET_BY_LOGIN_OR_EMAIL = USER_GET_ALL + "WHERE `login` = ? OR `email` = ?";
+//    String USER_CREATE_USER = "INSERT INTO `user` (`login`, `f_name`, `l_name`, `email`, `password`, `role_id`, `status`) " +
+//            "  VALUE(?, _utf8 ?, _utf8 ?, ?, ?, ?, ?)";
 
     String CATEGORY_NAME = "name";
 
@@ -41,7 +41,7 @@ public interface QueryResource {
 
     String CATALOG_GET_ALL = "SELECT * FROM `library_db`.`catalog` " +
             "JOIN `library_db`.`category` ON `catalog`.`category_id` = `category`.`id` ";
-    String CATALOG_GET_BY_ID = CATALOG_GET_ALL +"WHERE `catalog`.`id` = ?";
+    String CATALOG_GET_BY_ID = CATALOG_GET_ALL + "WHERE `catalog`.`id` = ?";
     String CATALOG_GET_BY_STATUS = CATALOG_GET_ALL + "WHERE `catalog`.`status` = ?";
     String CATALOG_GET_BY_CATEGORY_ID = CATALOG_GET_ALL + "WHERE `catalog`.`category_id` = ?";
 

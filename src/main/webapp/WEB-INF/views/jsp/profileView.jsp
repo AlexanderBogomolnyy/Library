@@ -5,6 +5,7 @@
 
 <fmt:setLocale value="${sessionScope[Attributes.LOCALE]}"/>
 <fmt:setBundle basename="content" var="message"/>
+<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}${Paths.BASE}"/>
 
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
    <h4> <fmt:message key="profile.email" bundle="${message}"/> ${user.email}</h4>
    <h4> <fmt:message key="profile.role" bundle="${message}"/> ${user.role}</h4>
    <h4> <fmt:message key="profile.status" bundle="${message}"/> ${user.status}</h4>
-   <div class="link_box"> <a class="button-link" href="${pageContext.request.contextPath}${Paths.LOGOUT}"><fmt:message key="profile.logout" bundle="${message}"/></a></div>
+   <div class="link_box"> <a class="button-link" href="${url_base}${Paths.LOGOUT}"><fmt:message key="profile.logout" bundle="${message}"/></a></div>
   </div>
 </div>
 <jsp:include page="_footer.jsp"/>

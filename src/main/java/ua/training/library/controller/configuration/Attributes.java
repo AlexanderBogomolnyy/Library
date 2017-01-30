@@ -2,9 +2,15 @@ package ua.training.library.controller.configuration;
 
 public class Attributes {
 
-    public static final String LOGINED_USER = "loginedUser";
+    public static final String LOGINED_USER = "logined_user";
     public static final String USER_ON_REGISTRATION = "user_on_registration";
-    public static final String LIST_OF_CLIENTS = "clientList";
+    public static final String LIST_OF_CLIENTS = "client_list";
+    public static final String LIST_OF_ORDERS = "order_list";
+
+    public static final String ORDER_PATH = "order_path";
+
+    public static final String CATALOG = "catalog";
+
 
     public static final String PAGE_REFERER = "Referer";
     public static final String REDIRECT = "redirect";

@@ -2,6 +2,7 @@ package ua.training.library.dao.impl;
 
 import ua.training.library.config.LoggingMessages;
 import ua.training.library.dao.UserDAO;
+import ua.training.library.dao.exception.DAOException;
 import ua.training.library.dao.query.QueryResource;
 import ua.training.library.model.entity.User;
 import ua.training.library.model.entity.states.ActivationStatus;
@@ -20,6 +21,23 @@ public class UserDAOImpl implements UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
+    private static final String USER_ROLE_NAME = "user_role.name";
+    private static final String ID = "user.id";
+    private static final String LOGIN = "user.login";
+    private static final String FIRST_NAME = "user.f_name";
+    private static final String LAST_NAME = "user.l_name";
+    private static final String EMAIL = "user.email";
+    private static final String PASSWORD = "user.password";
+    private static final String STATUS = "user.status";
+
+    private static final String GET_ALL = "SELECT * FROM `user` " +
+            "LEFT JOIN `user_role` ON `user`.`role_id` = `user_role`.`id` ";
+    private static final String GET_BY_LOGIN_AND_PASSWORD = GET_ALL + "WHERE `user`.`login` = ? AND `user`.`password` = ?";
+    private static final String GET_BY_ID = GET_ALL + "WHERE `user`.`id` = ?";
+    private static final String GET_ALL_BY_ROLE = GET_ALL + "WHERE `user_role`.`name` = ?";
+    private static final String CREATE_USER = "INSERT INTO `user` (`login`, `f_name`, `l_name`, `email`, `password`, `role_id`, `status`) " +
+            "  VALUE(?, _utf8'?', _utf8'?', ?, ?, ?, ?)";
+
     private Connection connection;
 
     public UserDAOImpl(Connection connection) {
@@ -29,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getByLoginAndPassword(String login, String password) {
         Optional<User> result = Optional.empty();
-        try(PreparedStatement query = connection.prepareStatement(QueryResource.USER_GET_BY_LOGIN_AND_PASSWORD) ){
+        try(PreparedStatement query = connection.prepareStatement(GET_BY_LOGIN_AND_PASSWORD) ){
             query.setString(1, login.toLowerCase());
             query.setString(2, password);
             ResultSet rs = query.executeQuery();
@@ -44,18 +62,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public Optional<User> getByLoginAndEmail(String login, String email) {
-        Optional<User> result = Optional.empty();
-        try(PreparedStatement query = connection.prepareStatement(QueryResource.USER_GET_BY_LOGIN_OR_EMAIL) ){
-            query.setString(1, login);
-            query.setString(2, email.toLowerCase());
+    public List<User> getAllByRole(Role role) {
+        List<User> result = new ArrayList<>();
+        try(PreparedStatement query = connection.prepareStatement(GET_ALL_BY_ROLE) ){
+            query.setString(1, role.name());
             ResultSet rs = query.executeQuery();
-            if( rs.next() ){
+            while (rs.next()){
                 User user = getUserFromResultSet(rs);
-                result = Optional.of(user);
+                result.add(user);
             }
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            throw new DAOException(LoggingMessages.DAO_USER_EXCEPTION_GET_ALL_BY_ROLE, ex);
         }
         return result;
     }
@@ -63,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Optional<User> getById(int id) {
         Optional<User> result = Optional.empty();
-        try(PreparedStatement query = connection.prepareStatement(QueryResource.USER_GET_BY_ID) ){
+        try(PreparedStatement query = connection.prepareStatement(GET_BY_ID) ){
             query.setInt(1, id);
             ResultSet rs = query.executeQuery();
             if( rs.next() ){
@@ -71,30 +88,21 @@ public class UserDAOImpl implements UserDAO {
                 result = Optional.of(user);
             }
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            logger.error(LoggingMessages.DAO_USER_EXCEPTION_GET_BY_ID);
+            throw new DAOException(LoggingMessages.DAO_USER_EXCEPTION_GET_BY_ID, ex);
         }
         return result;
     }
 
     @Override
     public List<User> getAll() {
-        List<User> result = new ArrayList<>();
-        try(PreparedStatement query = connection.prepareStatement(QueryResource.USER_GET_ALL) ){
-            ResultSet rs = query.executeQuery();
-            while (rs.next()){
-                User user = getUserFromResultSet(rs);
-                result.add(user);
-            }
-        }catch(SQLException ex){
-            throw new RuntimeException(ex);
-        }
-        return result;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void create(User user) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(QueryResource.USER_CREATE_USER);
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getFirstName());
             preparedStatement.setString(3, user.getLastName());
@@ -113,24 +121,24 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void update(User user) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException();
     }
 
     private User getUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User.Builder().
-                setId(rs.getInt(QueryResource.ID))
-                .setLogin(rs.getString(QueryResource.USER_LOGIN))
-                .setFirstName(rs.getString(QueryResource.USER_FIRST_NAME))
-                .setLastName(rs.getString(QueryResource.USER_LAST_NAME))
-                .setEmail(rs.getString(QueryResource.USER_EMAIL))
-                .setPassword(rs.getString(QueryResource.USER_PASSWORD))
-                .setRole(Role.valueOf(rs.getString(QueryResource.USER_ROLE_NAME)))
-                .setStatus(ActivationStatus.valueOf(rs.getString(QueryResource.STATUS)))
+                setId(rs.getInt(ID))
+                .setLogin(rs.getString(LOGIN))
+                .setFirstName(rs.getString(FIRST_NAME))
+                .setLastName(rs.getString(LAST_NAME))
+                .setEmail(rs.getString(EMAIL))
+                .setPassword(rs.getString(PASSWORD))
+                .setRole(Role.valueOf(rs.getString(USER_ROLE_NAME)))
+                .setStatus(ActivationStatus.valueOf(rs.getString(STATUS)))
                 .build();
         return user;
     }

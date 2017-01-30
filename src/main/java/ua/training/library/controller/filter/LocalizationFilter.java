@@ -31,6 +31,7 @@ public class LocalizationFilter implements Filter {
             session.setAttribute(Attributes.LOCALE, locale);
             logger.info(LoggingMessages.INFO_DEFAULT_LOCALIZATION + locale.toLanguageTag());
         }
+        logger.info("Locale changed. New locale: " + locale.toLanguageTag());
         chain.doFilter(request, response);
     }
 

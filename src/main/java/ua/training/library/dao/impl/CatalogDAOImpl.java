@@ -1,6 +1,9 @@
 package ua.training.library.dao.impl;
 
+import org.apache.log4j.Logger;
+import ua.training.library.config.LoggingMessages;
 import ua.training.library.dao.CatalogDAO;
+import ua.training.library.dao.exception.DAOException;
 import ua.training.library.dao.query.QueryResource;
 import ua.training.library.model.entity.Catalog;
 import ua.training.library.model.entity.Category;
@@ -15,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CatalogDAOImpl implements CatalogDAO {
+
+    private static final Logger logger = Logger.getLogger(CatalogDAOImpl.class);
 
     private Connection connection;
 
@@ -62,10 +67,11 @@ public class CatalogDAOImpl implements CatalogDAO {
             ResultSet rs = query.executeQuery();
             if( rs.next() ){
                 Catalog catalog = getCatalogFromResultSet(rs);
-                result.of(catalog);
+                result = Optional.of(catalog);
             }
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            logger.error(LoggingMessages.DAO_CATALOG_EXCEPTION_GET_BY_ID);
+            throw new DAOException(LoggingMessages.DAO_CATALOG_EXCEPTION_GET_BY_ID, ex);
         }
         return result;
     }

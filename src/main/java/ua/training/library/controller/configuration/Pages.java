@@ -10,9 +10,14 @@ public interface Pages {
     String LOGIN_PAGE = JSP_DIR + "loginView" + JSP;
     String REGISTRATION_PAGE = JSP_DIR + "registrationView" + JSP;
     String CLIENTS_PAGE = JSP_DIR + "clientsView" + JSP;
+    String CATALOG_PAGE = JSP_DIR + "catalogView" + JSP;
+    String FILL_ORDER_PAGE = JSP_DIR + "orderView" + JSP;
+    String ORDERS_PAGE = JSP_DIR + "ordersView" + JSP;
 
     String ERROR_PAGE = JSP_DIR + "errorView" + JSP;
     String ACCESS_DENIED_PAGE = JSP_DIR + "accessDeniedView" +JSP;
 
     String REDIRECT = JSP_DIR + "_redirect" + JSP;
+
+
 }

@@ -3,15 +3,48 @@ package ua.training.library.model.entity;
 import ua.training.library.model.entity.states.BookLocation;
 import ua.training.library.model.entity.states.BookStatus;
 
+/**
+ * <p> The Book class.
+ * This class contains information about specific book in library archive.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public class Book {
 
+    /**
+     * Book id
+     */
     private int id;
+
+    /**
+     * Book description in library catalog
+     */
     private Catalog catalog;
+
+    /**
+     * Identifier of the book in library archive
+     */
     private String libraryIdentifier;
+
+    /**
+     * Description of current book state (marks about the damage, for example)
+     */
     private String state;
+
+    /**
+     * Current book location (in reading room, on hand or in the library archive)
+     */
     private BookLocation location;
+
+    /**
+     * Mark about book status: active or delete
+     */
     private BookStatus status;
 
+    /**
+     * The inner class for helping in building book instance
+     */
     public static class Builder {
 
         private int id;

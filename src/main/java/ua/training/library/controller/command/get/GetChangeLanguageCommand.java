@@ -1,11 +1,11 @@
 package ua.training.library.controller.command.get;
 
-import ua.training.library.config.LoggingMessages;
 import ua.training.library.controller.command.Command;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.i18n.Languages;
 import org.apache.log4j.Logger;
+import ua.training.library.model.entity.states.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +13,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 
-public class ChangeLanguageCommand implements Command {
+public class GetChangeLanguageCommand implements Command {
 
-    private static final Logger logger = Logger.getLogger(ChangeLanguageCommand.class);
+    private static final Logger logger = Logger.getLogger(GetChangeLanguageCommand.class);
 
     private static final String SPLITTER = "/";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response, Role role) throws IOException {
         HttpSession session = request.getSession();
         String[] uriComponents = request.getRequestURI().split(SPLITTER);
         String ending = uriComponents[uriComponents.length-1];
@@ -29,11 +29,11 @@ public class ChangeLanguageCommand implements Command {
             session.setAttribute(Attributes.LOCALE, locale);
         }
         String redirect = getRedirectQuery(request);
-        try {
+//        try {
             response.sendRedirect(redirect);
-        } catch (IOException e) {
-            logger.error(LoggingMessages.CONTROLLER_ERROR_IN_REDIRECTION);
-        }
+//        } catch (IOException e) {
+//            logger.error(LoggingMessages.CONTROLLER_ERROR_IN_REDIRECTION);
+//        }
 //        request.setAttribute(Attributes.REDIRECT, redirect);
 //        logger.info("redirect: " + redirect);
         return Pages.REDIRECT;

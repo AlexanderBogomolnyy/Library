@@ -5,6 +5,7 @@
 
 <fmt:setLocale value="${sessionScope[Attributes.LOCALE]}"/>
 <fmt:setBundle basename="content" var="message"/>
+<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}${Paths.BASE}"/>
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@
 <c:set var="user" scope="page" value="${sessionScope[Attributes.LOGINED_USER]}"/>
 <div id="window_container">
     <div id="window_frame">
-        <form method="POST" action="${pageContext.request.contextPath}${Paths.LOGIN}">
+        <form method="POST" action="${url_base}${Paths.LOGIN}">
             <p><strong><fmt:message key="login.form_title" bundle="${message}"/></strong></p>
             <div class="form_labels">
                 <table border="0">

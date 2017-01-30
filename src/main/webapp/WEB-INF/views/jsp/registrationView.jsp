@@ -9,7 +9,7 @@
 <fmt:setLocale value="${sessionScope[Attributes.LOCALE]}"/>
 <fmt:setBundle basename="content" var="message"/>
 
-<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}"/>
+<c:set var="url_base" scope="page" value="${pageContext.request.contextPath}${Paths.BASE}"/>
 <c:set var="user" scope="page" value="${requestScope[Attributes.USER_ON_REGISTRATION]}"/>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
 
 <div id="window_container">
   <div id="window_frame">
-    <form action="${url}${Paths.REGISTRATION}" method="POST" id="subForm">
+    <form action="${url_base}${Paths.REGISTRATION}" method="POST" id="subForm">
       <p><strong><fmt:message key="registration.form_title" bundle="${message}" /></strong></p>
       <div class="form_labels">
         <label for="firstName"><fmt:message key="registration.first_name" bundle="${message}" /></label><br/><input type="text" name="firstName" value="${user.firstName}" id="firstName"/><br/>
@@ -53,8 +53,8 @@
         <label for="password"><fmt:message key="registration.password" bundle="${message}" /></label><br/><input required type="password" name="password" value="" id="password"/><br/>
         <label for="conf_password"><fmt:message key="registration.confirm_password" bundle="${message}" /></label><br/><input required type="password" value="" id="conf_password"/><br/>
         <label for="role"><fmt:message key="registration.role" bundle="${message}" /></label><br/><select size="1" name="role" id="role" >
-          <option selected>CLIENT</option>
-          <option>LIBRARIAN</option>
+          <option selected value="${Role.CLIENT}"><fmt:message key="registration.role.client" bundle="${message}" /></option>
+          <option value="${Role.LIBRARIAN}"><fmt:message key="registration.role.librarian" bundle="${message}" /></option>
         </select><br/>
       </div>
       <div class="button_box">

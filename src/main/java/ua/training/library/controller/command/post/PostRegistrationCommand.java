@@ -14,7 +14,6 @@ import ua.training.library.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class PostRegistrationCommand implements Command {
 
@@ -22,9 +21,9 @@ public class PostRegistrationCommand implements Command {
     private static final UserService userService = UserServiceImpl.getInstance();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response, Role role) {
 
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
 //        session.setAttribute(Attributes.ERROR_MESSAGE, "Success");
 
         User user = new User.Builder()
@@ -40,7 +39,7 @@ public class PostRegistrationCommand implements Command {
         try {
             userService.create(user);
             request.setAttribute(Attributes.SUCCESS_MESSAGE, ActionMessages.SUCCESS_IN_CREATING_USER);
-            response.sendRedirect(Paths.HOME);
+            response.sendRedirect(Paths.BASE + Paths.HOME);
             return Pages.REDIRECT;
         } catch (Exception ex) {
             request.setAttribute(Attributes.ERROR_MESSAGE, ex.getMessage());
