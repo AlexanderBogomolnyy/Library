@@ -25,7 +25,7 @@ public class Order {
     private int userId;
 
     /**
-     * User instance for current order
+     * User which made current order
      */
     private User user;
 
@@ -65,7 +65,7 @@ public class Order {
     private BookLocation expectedBookLocation;
 
     /**
-     * The inner class for helping in building book instance
+     * The inner class for helping in order instance building
      */
     public static class Builder {
 

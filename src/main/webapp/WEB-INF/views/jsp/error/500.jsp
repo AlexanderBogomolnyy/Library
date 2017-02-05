@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="ua.training.library.controller.configuration.Attributes" %>
+<%@ page import="ua.training.library.controller.configuration.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -14,8 +15,8 @@
 </head>
 <body>
 
-<jsp:include page="_header.jsp"/>
-<jsp:include page="_menu.jsp"/>
+<jsp:include page="/WEB-INF/views/jsp/_header.jsp"/>
+<jsp:include page="/WEB-INF/views/jsp/_menu.jsp"/>
 
 <div id="error_box">
   <div class="cell">
@@ -25,15 +26,15 @@
   </div>
   <div class="cell">
     <div class="content">
-      <h1> ${error_code} Error </h1>
-      <h2> ${error_message}</h2>
+      <h1> 500 Error </h1>
+      <h2> Internal server error </h2>
 
-      <h3> ${error_comment}</h3>
+      <h3> The server encountered an internal error or misconfiguration <br/> and was unable to complete your request.</h3>
 
-      <p><a class="button-link" href="<c:url value="${pageContext.request.contextPath}"/>"><fmt:message key="error.return_home" bundle="${message}"/></a></p>
+      <p><a class="button-link" href="<c:url value="${pageContext.request.contextPath}${Paths.BASE}${Paths.HOME}"/>"><fmt:message key="error.return_home" bundle="${message}"/></a></p>
     </div>
   </div>
 </div>
-<jsp:include page="_footer.jsp"/>
+<jsp:include page="/WEB-INF/views/jsp/_footer.jsp"/>
 </body>
 </html>

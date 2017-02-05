@@ -14,22 +14,67 @@ import ua.training.library.model.entity.states.BookStatus;
  */
 public class Catalog {
 
+    /**
+     * The Catalog element ID
+     */
     private int id;
+
+    /**
+     * The title of the book
+     */
     private String title;
+
+    /**
+     * The author of the book
+     */
     private String author;
+
+    /**
+     * The year of publication of the book
+     */
     private int yearOfPublication;
+
+    /**
+     * The category id for book
+     */
+    private int categoryId;
+
+    /**
+     * The category which include the book
+     */
     private Category category;
+
+    /**
+     * The ISBN which include the book
+     */
     private String isbn;
+
+    /**
+     * The total amount of book examples in library
+     */
     private int amountAll;
+
+    /**
+     * The amount of available book examples
+     */
     private int amountAvailable;
+
+    /**
+     * The status of catalog element.
+     * Through this field catalog element can being withdrawn from common use
+     */
     private BookStatus status;
 
+    /**
+     * The inner class for helping in catalog instance building
+     */
     public static class Builder {
 
         private int id;
         private String title;
         private String author;
         private int yearOfPublication;
+        private int categoryId;
         private Category category;
         private String isbn;
         private int amountAll;
@@ -53,6 +98,11 @@ public class Catalog {
 
         public Builder setYearOfPublication(int yearOfPublication) {
             this.yearOfPublication = yearOfPublication;
+            return this;
+        }
+
+        public Builder setCategoryId(int categoryId) {
+            this.categoryId = categoryId;
             return this;
         }
 
@@ -87,6 +137,7 @@ public class Catalog {
             catalog.setTitle(title);
             catalog.setAuthor(author);
             catalog.setYearOfPublication(yearOfPublication);
+            catalog.setCategoryId(categoryId);
             catalog.setCategory(category);
             catalog.setIsbn(isbn);
             catalog.setAmountAll(amountAll);
@@ -126,6 +177,14 @@ public class Catalog {
 
     public void setYearOfPublication(int yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Category getCategory() {
@@ -175,8 +234,7 @@ public class Catalog {
 
         Catalog catalog = (Catalog) o;
 
-        if (amountAll != catalog.amountAll) return false;
-        if (amountAvailable != catalog.amountAvailable) return false;
+        if (categoryId != catalog.categoryId) return false;
         if (id != catalog.id) return false;
         if (yearOfPublication != catalog.yearOfPublication) return false;
         if (author != null ? !author.equals(catalog.author) : catalog.author != null) return false;
@@ -193,10 +251,9 @@ public class Catalog {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + yearOfPublication;
+        result = 31 * result + categoryId;
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
-        result = 31 * result + amountAll;
-        result = 31 * result + amountAvailable;
         return result;
     }
 }

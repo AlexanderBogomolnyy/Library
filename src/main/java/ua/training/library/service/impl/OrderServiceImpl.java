@@ -2,30 +2,37 @@ package ua.training.library.service.impl;
 
 import org.apache.log4j.Logger;
 import ua.training.library.config.ActionMessages;
+import ua.training.library.dao.BookDAO;
 import ua.training.library.dao.CatalogDAO;
+import ua.training.library.dao.OrderDAO;
 import ua.training.library.dao.UserDAO;
 import ua.training.library.dao.connection.AbstractConnection;
 import ua.training.library.dao.connection.ConnectionFactory;
 import ua.training.library.dao.connection.ConnectionFactoryImpl;
 import ua.training.library.dao.factory.DAOFactory;
 import ua.training.library.dao.factory.DAOFactoryImpl;
+import ua.training.library.model.entity.Book;
 import ua.training.library.model.entity.Order;
 import ua.training.library.model.entity.states.ActivationStatus;
 import ua.training.library.model.entity.states.BookStatus;
+import ua.training.library.model.entity.states.OrderType;
 import ua.training.library.model.entity.states.Role;
 import ua.training.library.service.OrderService;
 import ua.training.library.service.exception.ServiceException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
+
     private static final Logger logger = Logger.getLogger(CatalogServiceImpl.class);
 
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    private OrderServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    //Todo
+    OrderServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }
@@ -42,7 +49,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> getById(int id) {
-        throw new UnsupportedOperationException();
+        try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            return orderDAO.getById(id);
+        }
+    }
+
+    @Override
+    public List<Book> getBooksForOrder(Order order) {
+        try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
+            BookDAO bookDAO = daoFactory.getBookDAO(connection);
+            return bookDAO.getLocatedInLibraryByCatalogId(order.getCatalogId());
+        }
     }
 
     @Override
@@ -57,6 +75,7 @@ public class OrderServiceImpl implements OrderService {
                     orderList = getAllForLibrarian(connection);
                     break;
                 default:
+                    logger.warn(ActionMessages.NO_PERMISSION);
                     throw new ServiceException(ActionMessages.NO_PERMISSION);
             }
             return orderList;
@@ -77,17 +96,48 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createNewOrder(Order order) {
-        try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
+    public void createNewOrder(Order order, Role role) {
+        if (role == Role.CLIENT) {
+            try (AbstractConnection connection = connectionFactory.getMySQLConnection()) {
+                connection.beginTransaction();
+                //todo lever readAndCommitted
+                // todo in SQL
+                if (isCreatingPossible(order, connection)) {
+                    daoFactory.getOrderDAO(connection).createNewOrder(order);
+                    connection.commit();
+                } else {
+                    connection.rollback();
+                    logger.error(ActionMessages.ERROR_WITH_CREATING_NEW_ORDER);
+                    throw new ServiceException(ActionMessages.ERROR_WITH_CREATING_NEW_ORDER);
+                }
+            }
+        } else {
+            logger.warn(ActionMessages.NO_PERMISSION);
+            throw new ServiceException(ActionMessages.NO_PERMISSION);
+        }
+    }
+
+    @Override
+    public void updateAndComplete(int orderId, LocalDate dateOfReturn) {
+        try (AbstractConnection connection = connectionFactory.getMySQLConnection()) {
             connection.beginTransaction();
-            if (isCreatingPossible(order, connection)) {
-                daoFactory.getOrderDAO(connection).createNewOrder(order);
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            if (isDeletionPossible(orderId, orderDAO)) {
+                orderDAO.updateAndComplete(orderId, dateOfReturn);
                 connection.commit();
             } else {
                 connection.rollback();
-                throw new RuntimeException(ActionMessages.ERROR_WITH_CREATING_NEW_ORDER);
+                logger.error(ActionMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
+                throw new ServiceException(ActionMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
             }
         }
+    }
+
+    private boolean isDeletionPossible(int orderId, OrderDAO orderDAO) {
+
+        return orderDAO.getById(orderId)
+                .filter(c -> c.getType() != OrderType.COMPLETED)
+                .isPresent();
     }
 
     private boolean isCreatingPossible(Order order, AbstractConnection connection) {

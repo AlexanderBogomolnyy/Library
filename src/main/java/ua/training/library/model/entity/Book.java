@@ -43,7 +43,7 @@ public class Book {
     private BookStatus status;
 
     /**
-     * The inner class for helping in building book instance
+     * The inner class for helping in  book instance building
      */
     public static class Builder {
 

@@ -58,23 +58,24 @@
         <url-pattern>/library/ru</url-pattern>
         <url-pattern>/library/client/*</url-pattern>
         <url-pattern>/library/librarian/*</url-pattern>
-        <url-pattern>/library/error</url-pattern>
-        <url-pattern>/library/access_denied</url-pattern>
+        <url-pattern>/library/error/*</url-pattern>
+        <!--<url-pattern>/library/error/</url-pattern>-->
+        <!--<url-pattern>/library/access_denied</url-pattern>-->
     </servlet-mapping>
 
     <!-- error-code related error pages -->
     <error-page>
         <error-code>404</error-code>
-        <location>/library/error</location>
+        <location>/library/error/404</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/library/error</location>
+        <location>/library/error/403</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/library/error</location>
+        <location>/library/error/500</location>
     </error-page>
 
     <!-- exception-type related error pages -->
@@ -82,6 +83,6 @@
         <exception-type>
             javax.servlet.ServletException
         </exception-type>
-        <location>/library/error</location>
+        <location>/library/error/500</location>
     </error-page>
 </web-app>

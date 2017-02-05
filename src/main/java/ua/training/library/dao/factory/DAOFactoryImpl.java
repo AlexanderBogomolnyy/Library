@@ -49,7 +49,7 @@ public class DAOFactoryImpl implements DAOFactory {
 
     @Override
     public LibraryResponseDAO getLibraryResponseDAO(AbstractConnection connection) {
-        return null;
+        return new LibraryResponseDAOImpl(checkedConnection(connection));
     }
 
     private Connection checkedConnection(AbstractConnection connection) {

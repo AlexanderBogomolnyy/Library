@@ -33,7 +33,8 @@
                 <table border="0">
                     <tr>
                         <td><fmt:message key="login.user_login" bundle="${message}"/></td>
-                        <td><input style="width: 285px" type="text" name="${Parameters.LOGIN}" value="${user.login}"/></td>
+                        <td><input style="width: 285px" type="text" name="${Parameters.LOGIN}" value="${user.login}"/>
+                        </td>
                     </tr>
                     <tr>
                         <td><fmt:message key="login.user_password" bundle="${message}"/></td>
@@ -42,12 +43,13 @@
                     <tr>
                         <td colspan="2">
                             <div class="button_box">
-                                <input type="submit" value="<fmt:message key="menu.login" bundle="${message}"/>" class="button-link" id="button"/>
+                                <input type="submit" value="<fmt:message key="menu.login" bundle="${message}"/>"
+                                       class="button-link" id="button"/>
                             </div>
                         </td>
                     </tr>
                 </table>
-                <div style="color:blue; margin-bottom: 25px">User Name: admin, password: 123</div>
+                <%--<div style="color:blue; margin-bottom: 25px">User Name: admin, password: 123</div>--%>
             </div>
         </form>
     </div>

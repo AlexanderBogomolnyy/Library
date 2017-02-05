@@ -3,17 +3,59 @@ package ua.training.library.model.entity;
 import ua.training.library.model.entity.states.ActivationStatus;
 import ua.training.library.model.entity.states.Role;
 
+/**
+ * <p> The User class.
+ * This class contains general information about user,
+ * his common information, login, password, role and status.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public class User {
 
+    /**
+     * The user ID
+     */
     private int id;
+
+    /**
+     * The user login
+     */
     private String login;
+
+    /**
+     * The user first name
+     */
     private String firstName;
+
+    /**
+     * The user last name
+     */
     private String lastName;
+
+    /**
+     * The user e-mail
+     */
     private String email;
+
+    /**
+     * The user password
+     */
     private String password;
+
+    /**
+     * The user role
+     */
     private Role role;
+
+    /**
+     * The user status (like ACTIVE, DEACTIVATED)
+     */
     private ActivationStatus status;
 
+    /**
+     * The inner class for helping in user instance building
+     */
     public static class Builder {
 
         private int id;

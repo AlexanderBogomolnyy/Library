@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> login(String login, String password);
     Optional<User> getById(int id);
-//    Optional<User> getByLoginAndEmail(String login, String email);
     List<User> getAllAvailable(Role role);
     void create(User user);
     void update(User user);

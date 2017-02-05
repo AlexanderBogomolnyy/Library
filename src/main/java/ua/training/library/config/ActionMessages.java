@@ -8,8 +8,10 @@ public interface ActionMessages {
     String NO_PERMISSION = "You have no permission for this action";
 
     String ERROR_WITH_CREATING_NEW_ORDER = "This catalog card is unavailable now or have been deleted from the catalog.";
+    String ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER = "This order have been closed already.";
 
     String SUCCESS_IN_CREATING_USER = "Your account successfully created.";
-    String SUCCESS_IN_LOGIN = "You are our user. I know you.";
+    String SUCCESS_IN_CREATING_LIBRARY_RESPONSE = "Library response successfully created.";
+    String SUCCESS_IN_LOGIN = "You are our user. We know you.";
 
 }

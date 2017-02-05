@@ -1,8 +1,22 @@
 package ua.training.library.model.entity;
 
+/**
+ * <p> The Category class.
+ * This class contains information about catalog category.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public class Category {
 
+    /**
+     * The category id
+     */
     private int id;
+
+    /**
+     * The category name
+     */
     private String name;
 
     public Category(int id, String name) {

@@ -24,6 +24,8 @@ public class MainController extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(MainController.class);
 
+    private static final String ERROR_LINK = "/error";
+
 //    private static RoleManager manager = RoleManager.getInstance();
 
     private static final CommandHolder commandHolder = CommandHolder.getInstance();
@@ -31,23 +33,24 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info(LoggingMessages.CONTROLLER_GET_REQUEST + request.getRequestURI());
-        processCommand(executeCommand(request), request, response);
+        processCommand(getExecutedCommand(request), request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info(LoggingMessages.CONTROLLER_POST_REQUEST + request.getRequestURI());
-        processCommand(executeCommand(request), request, response);
+        processCommand(getExecutedCommand(request), request, response);
     }
 
     private void processCommand(Command command, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String page = command.execute(request, response, getUserRole(request));
+        String page = command.execute(request, response);
         if (!page.equals(Pages.REDIRECT)) {
             request.getRequestDispatcher(page).forward(request, response);
         }
     }
 
-    private Command executeCommand(HttpServletRequest request) {
+    // TODO rename
+    private Command getExecutedCommand(HttpServletRequest request) {
         String commandRequest = getCommandRequest(request);
         logger.warn("Command request: " + commandRequest);
         return commandHolder.getCommand(commandRequest);
@@ -62,14 +65,16 @@ public class MainController extends HttpServlet {
         String removeHomeAndRole = request.getRequestURI()
                 .replace(Paths.BASE, "")
                 .replace(Paths.DELIMITER + getUserRole(request).name().toLowerCase() + Paths.DELIMITER, Paths.DELIMITER);
-        String requestWithoutNumbers = removeHomeAndRole.replaceAll("\\d+", Paths.ID);
+        String requestWithoutNumbers = removeHomeAndRole;
+        if(!removeHomeAndRole.contains(ERROR_LINK)) {
+            requestWithoutNumbers = removeHomeAndRole.replaceAll("\\d+", Paths.ID);
+        }
         return request.getMethod().toUpperCase() + ":" + requestWithoutNumbers;
     }
 
     private Role getUserRole(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userInSession = (User) session.getAttribute(Attributes.LOGINED_USER);
-//        Objects.requireNonNull(userInSession);
         return userInSession == null ? Role.ANONYMOUS : userInSession.getRole();
     }
 

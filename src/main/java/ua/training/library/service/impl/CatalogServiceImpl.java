@@ -22,7 +22,7 @@ public class CatalogServiceImpl implements CatalogService{
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    private CatalogServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    CatalogServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }

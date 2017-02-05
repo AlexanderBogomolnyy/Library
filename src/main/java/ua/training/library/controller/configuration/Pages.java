@@ -5,19 +5,27 @@ public interface Pages {
     String JSP_DIR = "/WEB-INF/views/jsp/";
     String JSP = ".jsp";
 
-    String HOME_PAGE = JSP_DIR + "homeView" + JSP;
-    String PROFILE_PAGE = JSP_DIR + "profileView" + JSP;
-    String LOGIN_PAGE = JSP_DIR + "loginView" + JSP;
-    String REGISTRATION_PAGE = JSP_DIR + "registrationView" + JSP;
-    String CLIENTS_PAGE = JSP_DIR + "clientsView" + JSP;
-    String CATALOG_PAGE = JSP_DIR + "catalogView" + JSP;
-    String FILL_ORDER_PAGE = JSP_DIR + "orderView" + JSP;
-    String ORDERS_PAGE = JSP_DIR + "ordersView" + JSP;
+    String HOME_PAGE = JSP_DIR + "home" + JSP;
+    String PROFILE_PAGE = JSP_DIR + "userProfile" + JSP;
+    String LOGIN_PAGE = JSP_DIR + "login" + JSP;
+    String REGISTRATION_FORM_PAGE = JSP_DIR + "registrationForm" + JSP;
+    String CLIENTS_LIST_PAGE = JSP_DIR + "clientsList" + JSP;
+    String CATALOG_LIST_PAGE = JSP_DIR + "catalogList" + JSP;
+    String ORDER_FORM_PAGE = JSP_DIR + "orderForm" + JSP;
+    String ORDERS_LIST_PAGE = JSP_DIR + "ordersList" + JSP;
+    String LIBRARY_RESPONSE_FORM_PAGE = JSP_DIR + "libraryResponseForm" + JSP;
+    String LIBRARY_RESPONSES_LIST_PAGE = JSP_DIR + "libraryResponsesList" + JSP;
+    String LIBRARY_RESPONSE_COMPLETING_FORM = JSP_DIR + "libraryResponseCompletingForm" + JSP;
 
-    String ERROR_PAGE = JSP_DIR + "errorView" + JSP;
-    String ACCESS_DENIED_PAGE = JSP_DIR + "accessDeniedView" +JSP;
+//    String ERROR_PAGE = JSP_DIR + "errorView" + JSP;
+    String ERROR_403_PAGE = JSP_DIR + "/error/403" + JSP;
+    String ERROR_404_PAGE = JSP_DIR + "/error/404" + JSP;
+    String ERROR_500_PAGE = JSP_DIR + "/error/500" + JSP;
 
-    String REDIRECT = JSP_DIR + "_redirect" + JSP;
+//    String ACCESS_DENIED_PAGE = JSP_DIR + "accessDeniedView" +JSP;
+
+//    String REDIRECT = JSP_DIR + "_redirect" + JSP;
+    String REDIRECT = "_redirect";
 
 
 }

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    private UserServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    UserServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         try(AbstractConnection connection = connectionFactory.getMySQLConnection()) {
             UserDAO userDAO = daoFactory.getUserDAO(connection);
             if (role == Role.LIBRARIAN) {
-                return userDAO.getAllByRole(Role.CLIENT);
+                return userDAO.getAllByRole(role);
             } else {
                 throw new ServiceException(ActionMessages.NO_PERMISSION);
             }
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             connection.beginTransaction();
             UserDAO userDAO = daoFactory.getUserDAO(connection);
             if (userDAO.getByLoginAndPassword(user.getLogin(), user.getEmail()).isPresent())
-                throw new RuntimeException(ActionMessages.ERROR_WITH_CREATING_USER);
+                throw new ServiceException(ActionMessages.ERROR_WITH_CREATING_USER);
             else
                 userDAO.create(user);
             connection.commit();

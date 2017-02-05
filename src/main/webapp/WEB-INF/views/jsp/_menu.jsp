@@ -22,12 +22,18 @@
                 <a href="${user_scope_url}${Paths.CATALOG}"> <fmt:message key="menu.catalog" bundle="${message}"/> </a>
             </li>
             <li>
-                <a href="${user_scope_url}${Paths.ORDERS}"> <fmt:message key="menu.list_of_orders" bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.ORDERS}"> <fmt:message key="menu.list_of_orders"
+                                                                         bundle="${message}"/> </a>
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" roles="${librarian}">
             <li>
-                <a href="${user_scope_url}${Paths.CLIENTS}"> <fmt:message key="menu.list_of_clients" bundle="${message}"/> </a>
+                <a href="${user_scope_url}${Paths.LIBRARY_RESPONSES}"> <fmt:message key="menu.list_of_responses"
+                                                                                    bundle="${message}"/> </a>
+            </li>
+            <li>
+                <a href="${user_scope_url}${Paths.CLIENTS}"> <fmt:message key="menu.list_of_clients"
+                                                                          bundle="${message}"/> </a>
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" roles="${librarian}, ${client}">
@@ -36,9 +42,9 @@
             </li>
         </view:access-by-role>
         <view:access-by-role user="${user}" noUser="true">
-        <li style="float:right">
-            <a href="${url_base}${Paths.LOGIN}"> <fmt:message key="menu.login" bundle="${message}"/> </a>
-        </li>
+            <li style="float:right">
+                <a href="${url_base}${Paths.LOGIN}"> <fmt:message key="menu.login" bundle="${message}"/> </a>
+            </li>
         </view:access-by-role>
     </ul>
 </div>

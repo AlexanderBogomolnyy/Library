@@ -26,31 +26,35 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.info("Check authorization.");
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        String requestURI = httpServletRequest.getRequestURI();
-        HttpSession session = httpServletRequest.getSession();
+        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
+        HttpSession session = httpRequest.getSession();
         User user = (User) session.getAttribute(Attributes.LOGINED_USER);
         if (user == null) {
-            logger.warn("Error page. No logined user");
-            httpServletResponse.sendRedirect(Paths.ERROR);
+            logger.warn("Error page. No logged in user");
+            httpResponse.sendError(404);
             return;
         }
+        if(!isRequestAccessible(httpRequest, user)) {
+            logger.warn("Error page. Incorrect status or role.");
+            httpResponse.sendError(403);
+            return;
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private boolean isRequestAccessible(HttpServletRequest request, User user) {
+        String requestURI = request.getRequestURI();
         String shortURI = requestURI.replace(Paths.BASE + Paths.HOME, "");
         Objects.requireNonNull(user.getRole());
-        if (user.getStatus() == ActivationStatus.DEACTIVATED) {
-            logger.warn("Access denied.");
-            httpServletResponse.sendRedirect(Paths.ACCESS_DENIED);
-            return;
+        boolean isActivated;
+        if(shortURI.endsWith(Paths.LOGOUT) || shortURI.endsWith(Paths.PROFILE))
+            isActivated = true;
+        else {
+            isActivated = user.getStatus() == ActivationStatus.ACTIVE;
         }
-        if (!shortURI.startsWith(user.getRole().name().toLowerCase())) {
-            logger.warn("Error page. Incorrect role.");
-            httpServletResponse.sendRedirect(Paths.ERROR);
-            return;
-        }
-        logger.info("Authorization correctly checked.");
-        filterChain.doFilter(servletRequest, servletResponse);
+        boolean isAccessibleDirectory = shortURI.startsWith(user.getRole().name().toLowerCase());
+        return  isActivated && isAccessibleDirectory;
     }
 
     @Override

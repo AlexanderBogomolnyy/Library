@@ -13,14 +13,14 @@
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <link rel="stylesheet" type="text/css" href='<c:url value="/css/main.css"/>' />
   <link rel="stylesheet" type="text/css" href='<c:url value="/css/frames.css"/>' />
-  <title><fmt:message key="prifile.title" bundle="${message}"/></title>
+  <title><fmt:message key="profile.title" bundle="${message}"/></title>
 </head>
 <body>
 
 <jsp:include page="_header.jsp"/>
 <jsp:include page="_menu.jsp"/>
 
-<div class="headline"><h3><fmt:message key="prifile.title" bundle="${message}"/></h3></div>
+<div class="headline"><h3><fmt:message key="profile.title" bundle="${message}"/></h3></div>
 
 <jsp:include page="_popup_message.jsp"/>
 
