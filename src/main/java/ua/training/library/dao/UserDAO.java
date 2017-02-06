@@ -31,4 +31,13 @@ public interface UserDAO extends GenericDAO<User> {
      * @return - list of users with specific role
      */
     List<User> getAllByRole(Role role);
+
+    /**
+     * This method looks for Users with specific login and e-mail
+     *
+     * @param login - user login
+     * @param email - user email
+     * @return - Optional<User> which contains user or null, if user have not been founded
+     */
+    Optional<User> getByLoginAndEmail(String login, String email);
 }

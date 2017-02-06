@@ -1,15 +1,13 @@
 package ua.training.library.controller.command.get;
 
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.command.AbstractCommand;
-import ua.training.library.controller.command.Command;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.configuration.Pages;
-import ua.training.library.controller.configuration.Paths;
 import ua.training.library.model.entity.User;
 import org.apache.log4j.Logger;
 import ua.training.library.service.UserService;
-import ua.training.library.service.impl.UserServiceImpl;
+import ua.training.library.service.basic.BasicUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +18,13 @@ public class GetAllClientsCommand extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(GetAllClientsCommand.class);
 
-    private final UserService service = UserServiceImpl.getInstance();
+    private final UserService service = BasicUserService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User loggedInUser = getUserFromSession(request);
         try {
-            List<User> clientList = service.getAllAvailable(loggedInUser.getRole());
+            List<User> clientList = service.getAllClients(loggedInUser.getRole());
             logger.info(LoggingMessages.CLIENT_LIST_EXTRACTED);
             request.setAttribute(Attributes.LIST_OF_CLIENTS, clientList);
             return Pages.CLIENTS_LIST_PAGE;

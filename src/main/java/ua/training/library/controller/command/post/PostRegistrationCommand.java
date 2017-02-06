@@ -1,6 +1,6 @@
 package ua.training.library.controller.command.post;
 
-import ua.training.library.config.ActionMessages;
+import ua.training.library.messages.ServiceMessages;
 import ua.training.library.controller.command.AbstractCommand;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.configuration.Pages;
@@ -11,7 +11,7 @@ import ua.training.library.model.entity.states.ActivationStatus;
 import ua.training.library.model.entity.states.Role;
 import ua.training.library.model.util.PasswordHelper;
 import ua.training.library.service.UserService;
-import ua.training.library.service.impl.UserServiceImpl;
+import ua.training.library.service.basic.BasicUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public class PostRegistrationCommand extends AbstractCommand {
     public static final String INVALID_LAST_NAME_KEY = "invalid.second_name";
     public static final String INVALID_ROLE = "invalid.role";
 
-    private static final UserService userService = UserServiceImpl.getInstance();
+    private UserService userService = BasicUserService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,7 +33,7 @@ public class PostRegistrationCommand extends AbstractCommand {
         if (errors.isEmpty()) {
             try {
                 userService.create(user);
-                setSuccessMessageToSession(request, ActionMessages.SUCCESS_IN_CREATING_USER);
+                setSuccessMessageToSession(request, ServiceMessages.SUCCESS_IN_CREATING_USER);
                 response.sendRedirect(Paths.BASE + Paths.HOME);
                 return Pages.REDIRECT;
             } catch (RuntimeException ex) {

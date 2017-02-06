@@ -6,7 +6,7 @@ import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
 import ua.training.library.model.entity.LibraryResponse;
 import ua.training.library.service.LibraryResponseService;
-import ua.training.library.service.impl.LibraryResponseServiceImpl;
+import ua.training.library.service.basic.BasicLibraryResponseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ public class PostLibraryResponseCompletingCommand extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(PostLibraryResponseCompletingCommand.class);
 
-    private final LibraryResponseService service = LibraryResponseServiceImpl.getInstance();
+    private LibraryResponseService service = BasicLibraryResponseService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

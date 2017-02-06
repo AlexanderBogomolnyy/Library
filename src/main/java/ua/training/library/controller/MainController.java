@@ -1,6 +1,6 @@
 package ua.training.library.controller;
 
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.command.Command;
 import org.apache.log4j.Logger;
 import ua.training.library.controller.command.holder.CommandHolder;
@@ -17,7 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(name = "mainController")
+/**
+ * <p> Main controller of application.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public class MainController extends HttpServlet {
 
     private static final long serialVersionUID = -8047911912839526913L;
@@ -25,8 +30,6 @@ public class MainController extends HttpServlet {
     private static final Logger logger = Logger.getLogger(MainController.class);
 
     private static final String ERROR_LINK = "/error";
-
-//    private static RoleManager manager = RoleManager.getInstance();
 
     private static final CommandHolder commandHolder = CommandHolder.getInstance();
 
@@ -49,16 +52,10 @@ public class MainController extends HttpServlet {
         }
     }
 
-    // TODO rename
     private Command getExecutedCommand(HttpServletRequest request) {
         String commandRequest = getCommandRequest(request);
         logger.warn("Command request: " + commandRequest);
         return commandHolder.getCommand(commandRequest);
-
-//        Role userRole = getUserRole(request);
-//        return manager.getCommand(commandRequest, userRole);
-
-//        throw new UnsupportedOperationException();
     }
 
     private String getCommandRequest(HttpServletRequest request) {

@@ -1,4 +1,4 @@
-package ua.training.library.config;
+package ua.training.library.controller.configuration;
 
 public interface ResourceNames {
 

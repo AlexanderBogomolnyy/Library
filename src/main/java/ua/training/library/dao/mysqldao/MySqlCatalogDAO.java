@@ -1,7 +1,7 @@
-package ua.training.library.dao.impl;
+package ua.training.library.dao.mysqldao;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.CatalogDAO;
 import ua.training.library.dao.exception.DAOException;
 import ua.training.library.model.entity.Catalog;
@@ -24,12 +24,12 @@ import java.util.Optional;
  * @author Alexander Bogomolnyy
  * @version 1.0 10.01.2017.
  */
-public class CatalogDAOImpl implements CatalogDAO {
+public class MySqlCatalogDAO implements CatalogDAO {
 
     /**
      * Logger for CatalogDAOImpl class
      */
-    private static final Logger logger = Logger.getLogger(CatalogDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(MySqlCatalogDAO.class);
 
     /**
      * The names of table fields
@@ -59,7 +59,7 @@ public class CatalogDAOImpl implements CatalogDAO {
      */
     private Connection connection;
 
-    public CatalogDAOImpl(Connection connection) {
+    public MySqlCatalogDAO(Connection connection) {
         this.connection = connection;
     }
 

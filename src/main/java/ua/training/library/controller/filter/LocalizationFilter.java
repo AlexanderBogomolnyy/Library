@@ -1,6 +1,6 @@
 package ua.training.library.controller.filter;
 
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.i18n.Languages;
 import org.apache.log4j.Logger;

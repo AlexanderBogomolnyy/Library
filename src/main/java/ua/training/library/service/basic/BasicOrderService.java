@@ -1,7 +1,7 @@
-package ua.training.library.service.impl;
+package ua.training.library.service.basic;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.ActionMessages;
+import ua.training.library.messages.ServiceMessages;
 import ua.training.library.dao.BookDAO;
 import ua.training.library.dao.CatalogDAO;
 import ua.training.library.dao.OrderDAO;
@@ -10,7 +10,7 @@ import ua.training.library.dao.connection.AbstractConnection;
 import ua.training.library.dao.connection.ConnectionFactory;
 import ua.training.library.dao.connection.ConnectionFactoryImpl;
 import ua.training.library.dao.factory.DAOFactory;
-import ua.training.library.dao.factory.DAOFactoryImpl;
+import ua.training.library.dao.factory.MySqlDAOFactory;
 import ua.training.library.model.entity.Book;
 import ua.training.library.model.entity.Order;
 import ua.training.library.model.entity.states.ActivationStatus;
@@ -24,22 +24,21 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class OrderServiceImpl implements OrderService {
+public class BasicOrderService implements OrderService {
 
-    private static final Logger logger = Logger.getLogger(CatalogServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(BasicCatalogService.class);
 
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    //Todo
-    OrderServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    BasicOrderService(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }
 
     private static class Holder {
-        private static final OrderService INSTANCE = new OrderServiceImpl(ConnectionFactoryImpl.getInstance(),
-                DAOFactoryImpl.getInstance());
+        private static final OrderService INSTANCE = new BasicOrderService(ConnectionFactoryImpl.getInstance(),
+                MySqlDAOFactory.getInstance());
     }
 
     public static OrderService getInstance(){
@@ -75,8 +74,8 @@ public class OrderServiceImpl implements OrderService {
                     orderList = getAllForLibrarian(connection);
                     break;
                 default:
-                    logger.warn(ActionMessages.NO_PERMISSION);
-                    throw new ServiceException(ActionMessages.NO_PERMISSION);
+                    logger.warn(ServiceMessages.NO_PERMISSION);
+                    throw new ServiceException(ServiceMessages.NO_PERMISSION);
             }
             return orderList;
         }
@@ -100,20 +99,18 @@ public class OrderServiceImpl implements OrderService {
         if (role == Role.CLIENT) {
             try (AbstractConnection connection = connectionFactory.getMySQLConnection()) {
                 connection.beginTransaction();
-                //todo lever readAndCommitted
-                // todo in SQL
                 if (isCreatingPossible(order, connection)) {
                     daoFactory.getOrderDAO(connection).createNewOrder(order);
                     connection.commit();
                 } else {
                     connection.rollback();
-                    logger.error(ActionMessages.ERROR_WITH_CREATING_NEW_ORDER);
-                    throw new ServiceException(ActionMessages.ERROR_WITH_CREATING_NEW_ORDER);
+                    logger.error(ServiceMessages.ERROR_WITH_CREATING_NEW_ORDER);
+                    throw new ServiceException(ServiceMessages.ERROR_WITH_CREATING_NEW_ORDER);
                 }
             }
         } else {
-            logger.warn(ActionMessages.NO_PERMISSION);
-            throw new ServiceException(ActionMessages.NO_PERMISSION);
+            logger.warn(ServiceMessages.NO_PERMISSION);
+            throw new ServiceException(ServiceMessages.NO_PERMISSION);
         }
     }
 
@@ -127,14 +124,13 @@ public class OrderServiceImpl implements OrderService {
                 connection.commit();
             } else {
                 connection.rollback();
-                logger.error(ActionMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
-                throw new ServiceException(ActionMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
+                logger.error(ServiceMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
+                throw new ServiceException(ServiceMessages.ERROR_WITH_UPDATING_AND_COMPLETING_IN_ORDER);
             }
         }
     }
 
     private boolean isDeletionPossible(int orderId, OrderDAO orderDAO) {
-
         return orderDAO.getById(orderId)
                 .filter(c -> c.getType() != OrderType.COMPLETED)
                 .isPresent();

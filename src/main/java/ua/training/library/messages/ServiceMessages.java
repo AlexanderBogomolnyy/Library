@@ -1,6 +1,6 @@
-package ua.training.library.config;
+package ua.training.library.messages;
 
-public interface ActionMessages {
+public interface ServiceMessages {
 
     String ERROR_IN_LOGIN = "Invalid login or password. Please, try again.";
     String ERROR_WITH_CREATING_USER = "Login or e-mail is already present. Use another one.";

@@ -1,15 +1,14 @@
 package ua.training.library.controller.command.get;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.command.AbstractCommand;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.configuration.Pages;
-import ua.training.library.controller.configuration.Paths;
 import ua.training.library.model.entity.LibraryResponse;
 import ua.training.library.model.entity.User;
 import ua.training.library.service.LibraryResponseService;
-import ua.training.library.service.impl.LibraryResponseServiceImpl;
+import ua.training.library.service.basic.BasicLibraryResponseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,7 @@ public class GetAllLibraryResponsesCommand extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(GetAllLibraryResponsesCommand.class);
 
-    private final LibraryResponseService service = LibraryResponseServiceImpl.getInstance();
+    private LibraryResponseService service = BasicLibraryResponseService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

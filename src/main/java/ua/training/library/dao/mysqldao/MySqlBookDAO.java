@@ -1,7 +1,7 @@
-package ua.training.library.dao.impl;
+package ua.training.library.dao.mysqldao;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.BookDAO;
 import ua.training.library.dao.exception.DAOException;
 import ua.training.library.model.entity.Book;
@@ -25,12 +25,12 @@ import java.util.Optional;
  * @author Alexander Bogomolnyy
  * @version 1.0 10.01.2017.
  */
-public class BookDAOImpl implements BookDAO {
+public class MySqlBookDAO implements BookDAO {
 
     /**
      * Logger for BookDAOImpl class
      */
-    private static final Logger logger = Logger.getLogger(BookDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(MySqlBookDAO.class);
 
     /**
      * The names of table fields
@@ -64,7 +64,7 @@ public class BookDAOImpl implements BookDAO {
      */
     private Connection connection;
 
-    public BookDAOImpl(Connection connection) {
+    public MySqlBookDAO(Connection connection) {
         this.connection = connection;
     }
 

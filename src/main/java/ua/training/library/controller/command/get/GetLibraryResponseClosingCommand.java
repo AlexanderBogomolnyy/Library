@@ -7,7 +7,7 @@ import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
 import ua.training.library.model.entity.LibraryResponse;
 import ua.training.library.service.LibraryResponseService;
-import ua.training.library.service.impl.LibraryResponseServiceImpl;
+import ua.training.library.service.basic.BasicLibraryResponseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ public class GetLibraryResponseClosingCommand extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(GetLibraryResponseClosingCommand.class);
 
-    private final LibraryResponseService service = LibraryResponseServiceImpl.getInstance();
+    private LibraryResponseService service = BasicLibraryResponseService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,7 +34,6 @@ public class GetLibraryResponseClosingCommand extends AbstractCommand {
 
             if (!libraryResponse.isPresent()) {
                 setErrorMessageToSession(request, "This response is unavailable now.");
-                // TODO correct redirect considering user Role
                 response.sendRedirect(getBaseUrlByRole(request) + Paths.LIBRARY_RESPONSES);
                 return Pages.REDIRECT;
             }

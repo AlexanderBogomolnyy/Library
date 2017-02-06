@@ -1,7 +1,7 @@
 package ua.training.library.controller.command;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.configuration.Pages;
 
 import javax.servlet.http.HttpServletRequest;

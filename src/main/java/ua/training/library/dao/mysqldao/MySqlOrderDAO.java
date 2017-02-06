@@ -1,7 +1,7 @@
-package ua.training.library.dao.impl;
+package ua.training.library.dao.mysqldao;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.OrderDAO;
 import ua.training.library.dao.exception.DAOException;
 import ua.training.library.model.entity.Catalog;
@@ -27,12 +27,12 @@ import java.util.Optional;
  * @author Alexander Bogomolnyy
  * @version 1.0 10.01.2017.
  */
-public class OrderDAOImpl implements OrderDAO {
+public class MySqlOrderDAO implements OrderDAO {
 
     /**
      * Logger for OrderDAOImpl class
      */
-    private static final Logger logger = Logger.getLogger(OrderDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(MySqlOrderDAO.class);
 
     /**
      * The names of table fields
@@ -74,7 +74,7 @@ public class OrderDAOImpl implements OrderDAO {
      */
     private Connection connection;
 
-    public OrderDAOImpl(Connection connection) {
+    public MySqlOrderDAO(Connection connection) {
         this.connection = connection;
     }
 

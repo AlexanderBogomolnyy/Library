@@ -7,7 +7,7 @@ import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
 import ua.training.library.model.entity.Catalog;
 import ua.training.library.service.CatalogService;
-import ua.training.library.service.impl.CatalogServiceImpl;
+import ua.training.library.service.basic.BasicCatalogService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ public class GetOrderCommand extends AbstractCommand {
 
     public static final Logger logger = Logger.getLogger(GetOrderCommand.class);
 
-    private final CatalogService service = CatalogServiceImpl.getInstance();
+    private CatalogService service = BasicCatalogService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -26,9 +26,6 @@ public class GetOrderCommand extends AbstractCommand {
         try {
             Optional<Catalog> catalog = service.getById(id);
             request.setAttribute(Attributes.ORDER_CATALOG, catalog.orElseGet(Catalog::new));
-
-            logger.info("Request for post in order: " + request.getRequestURL());
-
             request.setAttribute(Attributes.ORDER_PATH, request.getRequestURI());
             if (!catalog.isPresent()) {
                 request.getSession().setAttribute(Attributes.ERROR_MESSAGE, "This book is unavailable now.");

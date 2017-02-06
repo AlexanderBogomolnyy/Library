@@ -1,8 +1,8 @@
 package ua.training.library.controller.command.post;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.ActionMessages;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.ServiceMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.command.AbstractCommand;
 import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
@@ -14,7 +14,7 @@ import ua.training.library.model.entity.User;
 import ua.training.library.model.entity.states.BookLocation;
 import ua.training.library.model.util.DateHelper;
 import ua.training.library.service.LibraryResponseService;
-import ua.training.library.service.impl.LibraryResponseServiceImpl;
+import ua.training.library.service.basic.BasicLibraryResponseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ public class PostLibraryResponseCommand extends AbstractCommand {
     private static final String INVALID_BOOK_LOCATION = "invalid.book_location";
     private static final String INVALID_PROCESSING_DATE = "invalid.processing.date";
 
-    private final LibraryResponseService service = LibraryResponseServiceImpl.getInstance();
+    private LibraryResponseService service = BasicLibraryResponseService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,7 +44,7 @@ public class PostLibraryResponseCommand extends AbstractCommand {
         if (errors.isEmpty()) {
             try {
                 service.createNewLibraryResponse(libraryResponse, loggedInUser.getRole());
-                setSuccessMessageToSession(request, ActionMessages.SUCCESS_IN_CREATING_LIBRARY_RESPONSE);
+                setSuccessMessageToSession(request, ServiceMessages.SUCCESS_IN_CREATING_LIBRARY_RESPONSE);
                 response.sendRedirect(getBaseUrlByRole(request) + Paths.LIBRARY_RESPONSES);
                 return Pages.REDIRECT;
             } catch (RuntimeException ex) {

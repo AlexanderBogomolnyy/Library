@@ -1,7 +1,7 @@
 package ua.training.library.dao.connection;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.exception.DAOException;
 
 import java.sql.Connection;

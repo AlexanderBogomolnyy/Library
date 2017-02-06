@@ -1,6 +1,5 @@
-package ua.training.library.controller.command.get;
+package ua.training.library.controller.command;
 
-import ua.training.library.controller.command.Command;
 import ua.training.library.controller.configuration.Attributes;
 import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;

@@ -1,5 +1,6 @@
 package ua.training.library.controller.command.holder;
 
+import ua.training.library.controller.command.ChangeLanguageCommand;
 import ua.training.library.controller.command.Command;
 import ua.training.library.controller.command.ErrorCommand;
 import ua.training.library.controller.command.get.*;

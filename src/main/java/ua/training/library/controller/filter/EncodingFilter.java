@@ -1,7 +1,7 @@
 package ua.training.library.controller.filter;
 
-import ua.training.library.config.LoggingMessages;
-import ua.training.library.config.ResourceNames;
+import ua.training.library.messages.LoggingMessages;
+import ua.training.library.controller.configuration.ResourceNames;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GetLogoutCommand implements Command {
+
     private static final Logger logger = Logger.getLogger(GetLogoutCommand.class);
 
     @Override

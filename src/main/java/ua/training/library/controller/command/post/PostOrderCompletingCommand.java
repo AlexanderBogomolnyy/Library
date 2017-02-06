@@ -5,7 +5,7 @@ import ua.training.library.controller.command.AbstractCommand;
 import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
 import ua.training.library.service.OrderService;
-import ua.training.library.service.impl.OrderServiceImpl;
+import ua.training.library.service.basic.BasicOrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ public class PostOrderCompletingCommand extends AbstractCommand {
 
     private static final Logger logger = Logger.getLogger(PostOrderCompletingCommand.class);
 
-    private final OrderService service = OrderServiceImpl.getInstance();
+    private OrderService service = BasicOrderService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -1,13 +1,13 @@
-package ua.training.library.service.impl;
+package ua.training.library.service.basic;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.ActionMessages;
+import ua.training.library.messages.ServiceMessages;
 import ua.training.library.dao.*;
 import ua.training.library.dao.connection.AbstractConnection;
 import ua.training.library.dao.connection.ConnectionFactory;
 import ua.training.library.dao.connection.ConnectionFactoryImpl;
 import ua.training.library.dao.factory.DAOFactory;
-import ua.training.library.dao.factory.DAOFactoryImpl;
+import ua.training.library.dao.factory.MySqlDAOFactory;
 import ua.training.library.model.entity.Book;
 import ua.training.library.model.entity.LibraryResponse;
 import ua.training.library.model.entity.Order;
@@ -24,21 +24,21 @@ import java.util.Optional;
 
 //TODO rename BasicLibraryResponseService
 
-public class LibraryResponseServiceImpl implements LibraryResponseService {
+public class BasicLibraryResponseService implements LibraryResponseService {
 
-    private static final Logger logger = Logger.getLogger(LibraryResponseServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(BasicLibraryResponseService.class);
 
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    LibraryResponseServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    BasicLibraryResponseService(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }
 
     private static class Holder {
-        private static final LibraryResponseService INSTANCE = new LibraryResponseServiceImpl(ConnectionFactoryImpl.getInstance(),
-                DAOFactoryImpl.getInstance()) {
+        private static final LibraryResponseService INSTANCE = new BasicLibraryResponseService(ConnectionFactoryImpl.getInstance(),
+                MySqlDAOFactory.getInstance()) {
         };
     }
 
@@ -53,8 +53,8 @@ public class LibraryResponseServiceImpl implements LibraryResponseService {
                 LibraryResponseDAO responseDAO = daoFactory.getLibraryResponseDAO(connection);
                 return responseDAO.getByLibrarianId(userId);
             } else {
-                logger.warn(ActionMessages.NO_PERMISSION);
-                throw new ServiceException(ActionMessages.NO_PERMISSION);
+                logger.warn(ServiceMessages.NO_PERMISSION);
+                throw new ServiceException(ServiceMessages.NO_PERMISSION);
             }
         }
     }
@@ -74,7 +74,7 @@ public class LibraryResponseServiceImpl implements LibraryResponseService {
                 }
             }
         } else {
-            throw new ServiceException(ActionMessages.NO_PERMISSION);
+            throw new ServiceException(ServiceMessages.NO_PERMISSION);
         }
     }
 
@@ -89,7 +89,7 @@ public class LibraryResponseServiceImpl implements LibraryResponseService {
                     throw new ServiceException("This order and library response already completed.");
             }
         } else {
-            throw new ServiceException(ActionMessages.NO_PERMISSION);
+            throw new ServiceException(ServiceMessages.NO_PERMISSION);
         }
     }
 

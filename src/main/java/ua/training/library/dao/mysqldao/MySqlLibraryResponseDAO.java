@@ -1,7 +1,7 @@
-package ua.training.library.dao.impl;
+package ua.training.library.dao.mysqldao;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.LibraryResponseDAO;
 import ua.training.library.dao.exception.DAOException;
 import ua.training.library.model.entity.*;
@@ -25,12 +25,12 @@ import java.util.Optional;
  * @author Alexander Bogomolnyy
  * @version 1.0 10.01.2017.
  */
-public class LibraryResponseDAOImpl implements LibraryResponseDAO {
+public class MySqlLibraryResponseDAO implements LibraryResponseDAO {
 
     /**
      * Logger for LibraryResponseDAOImpl class
      */
-    private static final Logger logger = Logger.getLogger(LibraryResponseDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(MySqlLibraryResponseDAO.class);
 
     /**
      * The names of table fields
@@ -94,7 +94,7 @@ public class LibraryResponseDAOImpl implements LibraryResponseDAO {
      */
     private Connection connection;
 
-    public LibraryResponseDAOImpl(Connection connection) {
+    public MySqlLibraryResponseDAO(Connection connection) {
         this.connection = connection;
     }
 

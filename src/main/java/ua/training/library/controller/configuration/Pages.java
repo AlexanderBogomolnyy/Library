@@ -17,15 +17,10 @@ public interface Pages {
     String LIBRARY_RESPONSES_LIST_PAGE = JSP_DIR + "libraryResponsesList" + JSP;
     String LIBRARY_RESPONSE_COMPLETING_FORM = JSP_DIR + "libraryResponseCompletingForm" + JSP;
 
-//    String ERROR_PAGE = JSP_DIR + "errorView" + JSP;
     String ERROR_403_PAGE = JSP_DIR + "/error/403" + JSP;
     String ERROR_404_PAGE = JSP_DIR + "/error/404" + JSP;
     String ERROR_500_PAGE = JSP_DIR + "/error/500" + JSP;
 
-//    String ACCESS_DENIED_PAGE = JSP_DIR + "accessDeniedView" +JSP;
-
-//    String REDIRECT = JSP_DIR + "_redirect" + JSP;
     String REDIRECT = "_redirect";
-
 
 }

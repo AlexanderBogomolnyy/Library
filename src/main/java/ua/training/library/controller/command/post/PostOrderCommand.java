@@ -1,7 +1,7 @@
 package ua.training.library.controller.command.post;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.controller.command.AbstractCommand;
 import ua.training.library.controller.configuration.Pages;
 import ua.training.library.controller.configuration.Paths;
@@ -12,7 +12,7 @@ import ua.training.library.model.entity.User;
 import ua.training.library.model.entity.states.BookLocation;
 import ua.training.library.model.util.DateHelper;
 import ua.training.library.service.OrderService;
-import ua.training.library.service.impl.OrderServiceImpl;
+import ua.training.library.service.basic.BasicOrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ public class PostOrderCommand extends AbstractCommand {
 
     private static final int MAXIMUM_DURATION_OF_A_BOOK_ORDER = 22;
 
-    private final OrderService service = OrderServiceImpl.getInstance();
+    private OrderService service = BasicOrderService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

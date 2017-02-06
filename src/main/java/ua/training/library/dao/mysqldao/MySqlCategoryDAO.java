@@ -1,7 +1,7 @@
-package ua.training.library.dao.impl;
+package ua.training.library.dao.mysqldao;
 
 import org.apache.log4j.Logger;
-import ua.training.library.config.LoggingMessages;
+import ua.training.library.messages.LoggingMessages;
 import ua.training.library.dao.CategoryDAO;
 import ua.training.library.dao.exception.DAOException;
 import ua.training.library.model.entity.Category;
@@ -22,12 +22,12 @@ import java.util.Optional;
  * @author Alexander Bogomolnyy
  * @version 1.0 10.01.2017.
  */
-public class CategoryDAOImpl implements CategoryDAO {
+public class MySqlCategoryDAO implements CategoryDAO {
 
     /**
      * Logger for CategoryDAOImpl class
      */
-    private static final Logger logger = Logger.getLogger(CategoryDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(MySqlCategoryDAO.class);
 
     /**
      * The names of table fields
@@ -47,7 +47,7 @@ public class CategoryDAOImpl implements CategoryDAO {
      */
     private Connection connection;
 
-    public CategoryDAOImpl(Connection connection) {
+    public MySqlCategoryDAO(Connection connection) {
         this.connection = connection;
     }
 

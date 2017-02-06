@@ -1,11 +1,13 @@
-package ua.training.library.config;
+package ua.training.library.messages;
 
+/**
+ * <p> The LoggingMessages interface.
+ * This interface provides constants with messages for logger.
+ *
+ * @author Alexander Bogomolnyy
+ * @version 1.0 10.01.2017.
+ */
 public interface LoggingMessages {
-
-    /**
-     * Logging message in JSTL tag
-     */
-    String JSTL_ERROR = " Exception in JSTL tag. \n";
 
     /**
      * Logging massages for DAO
@@ -13,6 +15,7 @@ public interface LoggingMessages {
     String DAO_USER_EXCEPTION_GET_BY_ID = "Error with getting user by ID.";
     String DAO_USER_EXCEPTION_GET_ALL_BY_ROLE = "Error with getting list of users by role.";
     String DAO_USER_EXCEPTION_GET_BY_LOGIN_AND_PASSWORD = "Error with getting user by login and password.";
+    String DAO_USER_EXCEPTION_GET_BY_LOGIN_AND_EMAIL = "Login or e-mail is already present.";
     String DAO_USER_EXCEPTION_USER_CREATING = "User creating is failed.";
 
     String DAO_CATEGORY_EXCEPTION_GET_BY_ID = "Error with getting by id.";
@@ -56,8 +59,6 @@ public interface LoggingMessages {
      */
     String CONTROLLER_GET_REQUEST = "GET request received. URL: ";
     String CONTROLLER_POST_REQUEST = "POST request received. URL: ";
-    String CONTROLLER_ERROR_IN_REDIRECTION = "Something wrong happened during redirection.";
-    String CONTROLLER_ACCESS_DENIED = "Access denied. Request URI : ";
     String CONTROLLER_ERROR_PAGE = "Error page called. Request URI: ";
 
     /**

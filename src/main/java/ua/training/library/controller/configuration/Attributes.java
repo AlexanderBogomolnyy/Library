@@ -24,7 +24,7 @@ public class Attributes {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String SUCCESS_MESSAGE = "successMessage";
 
-    public static final String PROFILE_LINK = "user_profile_link";
+//    public static final String PROFILE_LINK = "user_profile_link";
 
     public static final String LOCALE = "locale";
     public static final String EN = "en";

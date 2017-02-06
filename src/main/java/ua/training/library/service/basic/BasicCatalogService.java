@@ -1,4 +1,4 @@
-package ua.training.library.service.impl;
+package ua.training.library.service.basic;
 
 import org.apache.log4j.Logger;
 import ua.training.library.dao.CatalogDAO;
@@ -6,7 +6,7 @@ import ua.training.library.dao.connection.AbstractConnection;
 import ua.training.library.dao.connection.ConnectionFactory;
 import ua.training.library.dao.connection.ConnectionFactoryImpl;
 import ua.training.library.dao.factory.DAOFactory;
-import ua.training.library.dao.factory.DAOFactoryImpl;
+import ua.training.library.dao.factory.MySqlDAOFactory;
 import ua.training.library.model.entity.Catalog;
 import ua.training.library.model.entity.states.BookStatus;
 import ua.training.library.service.CatalogService;
@@ -15,21 +15,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CatalogServiceImpl implements CatalogService{
+public class BasicCatalogService implements CatalogService{
 
-    private static final Logger logger = Logger.getLogger(CatalogServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(BasicCatalogService.class);
 
     private ConnectionFactory connectionFactory;
     private DAOFactory daoFactory;
 
-    CatalogServiceImpl(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
+    BasicCatalogService(ConnectionFactory connectionFactory, DAOFactory daoFactory) {
         this.connectionFactory = connectionFactory;
         this.daoFactory = daoFactory;
     }
 
     private static class Holder {
-        private static final CatalogService INSTANCE = new CatalogServiceImpl(ConnectionFactoryImpl.getInstance(),
-                DAOFactoryImpl.getInstance());
+        private static final CatalogService INSTANCE = new BasicCatalogService(ConnectionFactoryImpl.getInstance(),
+                MySqlDAOFactory.getInstance());
     }
 
     public static CatalogService getInstance(){
